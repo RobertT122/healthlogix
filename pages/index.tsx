@@ -1,9 +1,14 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+/* HomePage component
+contains the splash page with information and images 
+constains the newsfeed component constrained to the 5 most recent postes
+*/
+import NewsFeed from "../components/NewsFeed"
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <h2>Hello World</h2>
+    <div>
+      <h2>HomePage</h2>
+      <NewsFeed/>
+    </div>
   )
 }
