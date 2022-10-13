@@ -1,13 +1,21 @@
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
+import { UserContext } from "../lib/context"
+import { useUserData } from "../lib/hooks";
+import { ThemeProvider } from "@mui/material/styles"
+import { darkTheme } from "../lib/themes"
 
 function MyApp({ Component, pageProps }) {
+  const userData = useUserData();
+
   return (
-    <>
-      <Navbar/>
-      <Component {...pageProps} />
-      <Footer/>
-    </>
+    <UserContext.Provider value={userData}>
+      <ThemeProvider theme={darkTheme}>
+        <Navbar/>
+        <Component {...pageProps} />
+        <Footer/>
+      </ThemeProvider>
+    </UserContext.Provider>
   )
 }
 
