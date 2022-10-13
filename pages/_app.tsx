@@ -6,7 +6,6 @@ import { useUserData } from "../lib/hooks";
 
 import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
 import { defaultTheme } from "../lib/themes"
 
 function MyApp({ Component, pageProps }) {
