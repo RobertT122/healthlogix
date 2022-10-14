@@ -1,5 +1,5 @@
 //Link to home button and drawer for site navigation
-import { AppBar, Typography, IconButton, Toolbar, Drawer } from '@mui/material'
+import { AppBar, Box, Typography, IconButton, Toolbar, Drawer, Button } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 
@@ -10,7 +10,12 @@ export default function Navbar () {
 
   return (
     <>
-      <AppBar  sx={{ flexDirection: 'row', py: 1}}>
+      <AppBar  sx={{ flexDirection: 'row', py: 1, justifyContent: 'space-between'}}>
+        
+        <Button sx={{px: 4}}>
+          <img src="icons/MortorPestleIcon.png" className="icon"/>
+        </Button>
+
         <IconButton 
           size="large"
           edge="start"
@@ -21,13 +26,10 @@ export default function Navbar () {
         >
           <MenuIcon/>
         </IconButton>
-        <Typography variant="h4" >
-          HealthLogix
-        </Typography>
       </AppBar>
       <Toolbar/>
 
-      <Drawer anchor='left' open={isOpen} variant="temporary" onClose={toggleDrawer}>
+      <Drawer anchor='right' open={isOpen} variant="temporary" onClose={toggleDrawer}>
         <IconButton 
             size="large"
             edge="start"
