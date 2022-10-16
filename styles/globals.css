@@ -6,14 +6,19 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-img{
-  width: inherit;
-  height: inherit;
+.coverImage {
+  width: 100%;
+  border-radius: 2%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
 }
 
-.coverImage {
-  z-index: 0;
-  object-fit: cover;
+.coverCard{
+  background-color: rgba(0,0,0, 0.3);
+}
+
+.coverText{
+  color: rgba(255,255,255, 0.65)
 }
 
 .icon{
