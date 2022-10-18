@@ -1,11 +1,24 @@
 // multipage newsfeed component;
 import NewsFeed from "../components/NewsFeed"
-import { getPosts, uploadPost } from "../lib/firebase"
-import { TextField } from "@mui/material";
+import { uploadPost } from "../lib/firebase"
+import { TextField, Button, TextareaAutosize, Typography} from "@mui/material";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { useState } from "react";
 
 
 export default function NewsPage() {
+  const [refresh, setRefresh] = useState(true)
+
+  return (
+    <>
+      <NewsFeed count={10} refresh={refresh}/>
+      <NewsPostForm setRefresh={setRefresh}/>
+    </>
+  )
+}
+
+const NewsPostForm = function ({setRefresh}) {
+
   const [post, setPost] = useState({body: '', title: ''});
   const updatePost = (key, newValue) => {
     setPost(Object.assign({}, post, {[key]: newValue}))
@@ -18,31 +31,32 @@ export default function NewsPage() {
   function handleSubmit(e) {
     setDisabled(true)
     e.preventDefault();
-    uploadPost(Object.assign({image}, post)).then(()=>setDisabled(false))
+    uploadPost(Object.assign({image}, post)).then(()=>{
+      setDisabled(false)
+      setRefresh(true)
+    })
   }
+
+
+
   return (
+    <form onSubmit={(e) => handleSubmit(e)} className='posts-form'>
+      <TextField label='Title'  onChange={(e) => updatePost('title', e.currentTarget.value)}/>
+      <br />
+      <TextareaAutosize placeholder="Create a new post!" onChange={(e) => updatePost('body', e.currentTarget.value)}/>
+      <br />
+      <Button color='secondary' variant='outlined' sx={{p:0}}>
+        <label className="button-label">
+          <FileUploadIcon sx={{}}/><Typography>Select Image</Typography>
+          <input type="file" hidden onChange={(e) => {
+            e.preventDefault()
+            setImage(e.target.files[0])
+          }}/>
+        </label>
+      </Button>
+      <br />
 
-    <>
-    <button onClick={(e)=>{
-      e.preventDefault();
-      getPosts(2).then(posts => console.log(posts))
-    }}>
-      get posts
-    </button>
-
-    <form onSubmit={(e) => handleSubmit(e)}>
-      <TextField label='title' onChange={(e) => updatePost('title', e.currentTarget.value)}/>
-      <TextField label='body' onChange={(e) => updatePost('body', e.currentTarget.value)}/>
-
-      <label>
-        
-        <input type="file" hidden onChange={(e) => {
-          e.preventDefault()
-          setImage(e.target.files[0])
-        }}/>
-      </label>
-      <button type="submit" hidden={disabled}>Submit</button>
+      <Button color='secondary' variant='contained' type="submit" hidden={disabled}>Submit</Button>
     </form>
-    </>
   )
 }

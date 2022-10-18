@@ -41,7 +41,7 @@ export default function HomePage() {
       </Card>
 
 
-      <NewsFeed/>
+      <NewsFeed count={5} refresh={false}/>
     </Container>
   )
 }

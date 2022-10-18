@@ -25,3 +25,26 @@ body {
   width: 48px;
   height: 48px;
 }
+
+.button-label:hover{
+  cursor: pointer;
+}
+
+.button-label{
+  padding: 4px;
+}
+
+.posts-form{
+  margin: 7px
+}
+
+.footer-modal{
+  width: 100%;
+  height: 100%;
+  color: grey;
+  text-decoration: none;
+}
+
+.hidden-card-feature{
+  visibility: hidden;
+}

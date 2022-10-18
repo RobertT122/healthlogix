@@ -21,16 +21,16 @@ if (!firebase.apps.length) {
 }
 
 export const auth = getAuth(app);
-
 export const db = getFirestore(app);
+
 const storage = getStorage(app);
 const postsRef = collection(db, 'posts');
 
 
-//works properly
-export const getPosts = async function(count, lastVisible=Date()){
+
+export const getPosts = async function(count, lastVisibleDate=new Date()){
   try{
-    let posts = await getDocs(query(postsRef, orderBy('createdAt', "desc"), limit(count), startAfter(lastVisible)))
+    let posts = await getDocs(query(postsRef, orderBy('createdAt', "desc"), limit(count), startAfter(lastVisibleDate)))
     console.log("got 'em")
     return posts.docs.map(doc => doc.data())
   } catch(err) {
@@ -41,15 +41,15 @@ export const getPosts = async function(count, lastVisible=Date()){
 export const uploadPost = async function(postInput){
   try{
     let {title, body} = postInput
-    let downloadUrl = "default"
+    let imageURL = "images/default-post-image.jpg"
     if(postInput.image){
       const imagesRef = ref(storage, `images/${postInput.image.name}`)
       let snapshot = await uploadBytes(imagesRef, postInput.image)
       console.log('get snapshot')
-      downloadUrl = await getDownloadURL(snapshot.ref)
+      imageURL = await getDownloadURL(snapshot.ref)
     }
     console.log('get url')
-    let postData = {title, body, downloadUrl, createdAt: Date()};
+    let postData = {title, body, imageURL, createdAt: new Date()};
     await addDoc(postsRef, postData)
     console.log("success! post uploaded")
   } catch(err) {
