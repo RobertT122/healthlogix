@@ -3,23 +3,23 @@ import Footer from "../components/Footer"
 import "../styles/globals.css"
 
 import { UserContext } from "../lib/context"
-import { useUserData } from "../lib/hooks";
+// import { useUserData } from "../lib/hooks";
 
 import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from '@mui/material/CssBaseline';
 import { defaultTheme } from "../lib/themes"
 
 function MyApp({ Component, pageProps }) {
-  const userData = useUserData();
+  // const userData = useUserData();
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline/>
-      <UserContext.Provider value={userData}>
+      {/* <UserContext.Provider value={userData}> */}
         <Navbar/>
         <Component {...pageProps} />
         <Footer/>
-      </UserContext.Provider>
+      {/* </UserContext.Provider> */}
     </ThemeProvider>
   )
 }
