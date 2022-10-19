@@ -1,3 +1,4 @@
+import React from "react"
 import { Card, Box, Typography, Divider, Container, Collapse } from "@mui/material"
 import { useState } from "react"
 
@@ -5,12 +6,11 @@ const textOuntline = "-1px -1px 0 #888, 1px -1px 0 #888, -1px 1px 0 #888, 1px 1p
 export default function NewsFeedItem({post}) {
   let [opacity, setOpacity] = useState(95)
   let [contentVisible, setContentVisible] = useState(false)
-
   return(
     <Card 
       sx={{width: "100%", m:0, maxWidth: 900, minWidth: 400, p: 1}} 
       className="news-feed-card"
-      onMouseLeave={()=> setContentVisible(false)}
+      // onMouseLeave={()=> setContentVisible(false)}
     >
       {/* <img src={post.imageURL} /> */}
       <Box 
@@ -54,14 +54,29 @@ export default function NewsFeedItem({post}) {
       <Collapse in={contentVisible}>
         <Divider/>
         <Container sx={{py: 4}}>
-          <Typography>
-            {post.body}
+          <Typography variant='body2' sx={{whiteSpace: 'pre-wrap'}}>
+            <div dangerouslySetInnerHTML={{__html: parseText(post.body)}}></div>
           </Typography>
         </Container>
       </Collapse>
-
 
     </Card>
   )
 }
 
+const parseText = function(text) {
+  let reg = /\[(?<name>[^\]]*)\]\((?<link>[^\)]*)\)/g;
+  let output;
+  let i = 0;
+
+  let mappedText = ''
+  while((output = reg.exec(text)) !== null){
+    mappedText += text.slice(i, output.index)
+    i = output.index + output[0].length
+    mappedText += `<a href=${output.groups.link}>${output.groups.name}</a>`
+  }
+  console.log(`${i} : ${text.length}`)
+  mappedText += text.slice(i)
+
+  return mappedText;
+}
