@@ -22,8 +22,7 @@ body {
 }
 
 .icon{
-  width: 48px;
-  height: 48px;
+  height: 60px;
 }
 
 .button-label:hover{
@@ -31,11 +30,17 @@ body {
 }
 
 .button-label{
+  display: flex;
   padding: 4px;
 }
 
 .posts-form{
-  margin: 7px
+  display: flex;
+  flex-direction: column;
+}
+
+.posts-form > *{
+  margin-bottom: 10px;
 }
 
 .footer-modal{
