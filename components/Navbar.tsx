@@ -40,7 +40,7 @@ export default function Navbar () {
           <MenuIcon fontSize="large"/>
         </IconButton>
       </AppBar>
-      <Toolbar sx={{mb: 2.5}}/>
+      <Toolbar sx={{mb: 3.5}}/>
 
       <Drawer anchor='right' open={isOpen} variant="temporary" onClose={toggleDrawer}>
 

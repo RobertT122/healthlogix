@@ -1,4 +1,4 @@
-import { Card, Box, Typography, Divider, Container } from "@mui/material"
+import { Card, Box, Typography, Divider, Container, Collapse } from "@mui/material"
 import { useState } from "react"
 
 const textOuntline = "-1px -1px 0 #888, 1px -1px 0 #888, -1px 1px 0 #888, 1px 1px 0 #888"
@@ -8,7 +8,7 @@ export default function NewsFeedItem({post}) {
 
   return(
     <Card 
-      sx={{width: "100%", m:0, maxWidth: 900, minWidth: 400}} 
+      sx={{width: "100%", m:0, maxWidth: 900, minWidth: 400, p: 1}} 
       className="news-feed-card"
       onMouseLeave={()=> setContentVisible(false)}
     >
@@ -21,7 +21,8 @@ export default function NewsFeedItem({post}) {
           backgroundImage: `url(${post.imageURL})`, 
           backgroundSize: '100%' ,
           opacity: `${opacity}%`,
-          pb: 4
+          pb: 4,
+          borderRadius: 1
         }}
 
         onMouseEnter={() => {
@@ -49,19 +50,17 @@ export default function NewsFeedItem({post}) {
           {post.title}
         </Typography>
       </Box>
-      {
-        contentVisible ?
-          <>
-            <Divider/>
-            <Container sx={{py: 4}}>
-              <Typography>
-                {post.body}
-              </Typography>
-            </Container>
-          </>
-        :
-          <></>
-      }
+
+      <Collapse in={contentVisible}>
+        <Divider/>
+        <Container sx={{py: 4}}>
+          <Typography>
+            {post.body}
+          </Typography>
+        </Container>
+      </Collapse>
+
+
     </Card>
   )
 }
