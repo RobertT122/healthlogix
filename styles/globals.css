@@ -37,6 +37,7 @@ body {
 .posts-form{
   display: flex;
   flex-direction: column;
+  width:100%;
 }
 
 .posts-form > *{
@@ -52,4 +53,8 @@ body {
 
 .hidden-card-feature{
   visibility: hidden;
+}
+
+.news-feed-card:hover{
+  cursor: pointer;
 }

@@ -44,33 +44,33 @@ export default function Navbar () {
 
       <Drawer anchor='right' open={isOpen} variant="temporary" onClose={toggleDrawer}>
 
-        <Button variant="contained">
-          <Link href="/">
-            <Box sx={{display: 'flex'}}>
-              <HomeIcon sx={{my: 'auto'}}/>
-              <Typography variant="h6" sx={{ml: 1}}>
+        <Button variant="contained" sx={{width: 1, px: 2, mx: 0}}>
+          <Link href="/" >
+            <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
+              <HomeIcon sx={{my: 'auto', mr: 2}}/>
+              <Typography variant="h6" >
                 Home
               </Typography>
             </Box>
           </Link>
         </Button>
           
-        <Button variant="contained">
+        <Button variant="contained" sx={{width: 1, px: 2, mx: 0}}>
           <Link href="/news">
-            <Box sx={{display: 'flex'}}>
-              <FeedIcon sx={{my: 'auto'}}/>
-              <Typography variant="h6" sx={{ml: 1}}>
+            <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
+              <FeedIcon sx={{my: 'auto', mr:2}}/>
+              <Typography variant="h6" >
                 News
               </Typography>
             </Box>
           </Link>
         </Button>
 
-        <Button variant="contained">
+        <Button variant="contained" sx={{width: 1, px: 2, mx: 0}}>
           <Link href="/carreers">
-            <Box sx={{display: 'flex'}}>
-              <WorkIcon sx={{my: 'auto'}}/>
-              <Typography variant="h6" sx={{ml: 1}}>
+            <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
+              <WorkIcon sx={{my: 'auto', mr:2}}/>
+              <Typography variant="h6" >
                 Career
               </Typography>
             </Box>

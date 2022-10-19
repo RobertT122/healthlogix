@@ -32,11 +32,13 @@ export const getPosts = async function(count, lastVisibleDate=new Date()){
   try{
     let posts = await getDocs(query(postsRef, orderBy('createdAt', "desc"), limit(count), startAfter(lastVisibleDate)))
     console.log("got 'em")
-    return posts.docs.map(doc => doc.data())
+    return posts.docs.map(doc => formatDate(doc.data()))
   } catch(err) {
     console.log(err)
   }
 }
+
+const formatDate = post => Object.assign(post, {createdAt: post.createdAt.toDate()})
 
 export const uploadPost = async function(postInput){
   try{
@@ -57,14 +59,3 @@ export const uploadPost = async function(postInput){
   }
 }
 
-export const getJobs = function() {
-
-}
-
-export const createJob = function() {
-
-}
-
-export const createResume = function() {
-
-}
