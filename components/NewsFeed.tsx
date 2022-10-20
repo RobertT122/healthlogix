@@ -17,7 +17,12 @@ export default function NewsFeed ({ count, refresh }) {
     return getPosts(count, now)
   }, [refresh])
   
-  useEffect(()=>{getTopPosts.then(topPosts => setPosts(topPosts))}, [refresh])
+  useEffect(() => {getInitialPosts()}, [refresh])
+
+  async function getInitialPosts(){
+    let topPosts = await getTopPosts
+    setPosts(topPosts);
+  }
   
   async function addNewPosts(newCount=count){
     let newPosts = await getPosts(newCount, posts[posts.length-1].createdAt);
@@ -25,12 +30,12 @@ export default function NewsFeed ({ count, refresh }) {
   }
 
   return (
-    <Container>
+    <Container sx={{mb: 20}} >
       <List>
-        {posts.map(post => {
+        {posts.map((post, index) => {
           return(
-            <ListItem sx={{width: "100%", display:'flex', flexDirection: 'column'}}> 
-              <NewsFeedItem post={post}/> 
+            <ListItem sx={{width: "100%", display:'flex', flexDirection: 'column'}} key={index} > 
+              <NewsFeedItem post={post} index={index%count}/> 
             </ListItem>
           )
         })}

@@ -68,16 +68,19 @@ const NewsPostForm = function ({setRefresh}) {
     <Container sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: 1}}>
       <Typography variant='h4'>Create a New Post</Typography>
       <br />
-      <NewsFeedItem post={tempPost}/>
+      <NewsFeedItem post={tempPost} index={0} />
       <br/><br/>
       <form onSubmit={(e) => handleSubmit(e)} className='posts-form'>
-        <TextField label='Title' onChange={(e) => updatePost('title', e.currentTarget.value)}/>
+        <TextField color="secondary" label='Title' onChange={(e) => updatePost('title', e.currentTarget.value)}/>
         <TextareaAutosize 
           placeholder="Create a new post!"
           style={{width: "100%", minHeight: 200}}
           onChange={(e) => updatePost('body', e.currentTarget.value)}
           onKeyDown={(e) => handleTextAreaTabs(e)}
         />
+        <Box sx={{mx: 'auto'}}>
+          <Typography variant="subtitle1" color="gray">* Add a Link: [name of link](https://www.example.com)</Typography>
+        </Box>
         <Box sx={{justifyContent: 'center', display: 'flex'}}> 
           {image ? <ClearImage/> : <></> }
           <Button color='secondary' variant='outlined' sx={{p:0, my: 'auto', mx: 2}}>

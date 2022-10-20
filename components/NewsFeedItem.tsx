@@ -1,66 +1,95 @@
 import React from "react"
-import { Card, Box, Typography, Divider, Container, Collapse } from "@mui/material"
+import { Card, CardMedia, Box, Typography, Divider, Container, Collapse, Grow} from "@mui/material"
 import { useState } from "react"
 
-const textOuntline = "-1px -1px 0 #888, 1px -1px 0 #888, -1px 1px 0 #888, 1px 1px 0 #888"
-export default function NewsFeedItem({post}) {
-  let [opacity, setOpacity] = useState(95)
+const initialOpacity = 80;
+
+export default function NewsFeedItem({post, index=0}) {
+  let [hover, setHover] = useState(false)
   let [contentVisible, setContentVisible] = useState(false)
   return(
-    <Card 
-      sx={{width: "100%", m:0, maxWidth: 900, minWidth: 400, p: 1}} 
-      className="news-feed-card"
-      // onMouseLeave={()=> setContentVisible(false)}
-    >
-      {/* <img src={post.imageURL} /> */}
-      <Box 
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          aspectRatio: "9/3",
-          backgroundImage: `url(${post.imageURL})`, 
-          backgroundSize: '100%' ,
-          opacity: `${opacity}%`,
-          pb: 4,
-          borderRadius: 1
+    <Grow in={true} timeout={index*500 + 500}>
+      <Card 
+        variant="outlined"
+        sx={{width: "100%", m:0, maxWidth: 900, minWidth: 400, backgroundColor: "rgb(247, 247, 247)"}} 
+        className="news-feed-card"
+        onMouseLeave={()=> {
+          setContentVisible(false)
+          setHover(false)
         }}
-
-        onMouseEnter={() => {
-          setOpacity(100)
-        }}
-        onMouseLeave={() => {
-          setOpacity(95)
-        }}
-        onClick={() => setContentVisible(true)}
       >
-        <Typography 
-          variant="subtitle2" 
-          color="primary"
-          align="right"
-          sx={{p:2, textShadow: textOuntline}}
-        >
-          {post.createdAt.toDateString()}
-        </Typography>
-        <Typography 
-          variant='h4' 
-          color="primary"
-          align="center"
-          sx={{my: "auto", textShadow: textOuntline}}
-        >
-          {post.title}
-        </Typography>
-      </Box>
+        <Box 
+          component="div"
+          sx={{
+            position: 'relative',
+            aspectRatio: '3',
+            backgroundColor: 'black',
 
-      <Collapse in={contentVisible}>
-        <Divider/>
-        <Container sx={{py: 4}}>
-          <Typography variant='body2' sx={{whiteSpace: 'pre-wrap'}}>
-            <div dangerouslySetInnerHTML={{__html: parseText(post.body)}}></div>
-          </Typography>
-        </Container>
-      </Collapse>
+          }}
 
-    </Card>
+          onMouseEnter={() => {
+            setHover(true)
+          }}
+
+          onClick={() => setContentVisible(true)}
+        >
+          <CardMedia
+            component="img"
+            image={post.imageURL}
+            sx={{
+              objectFit:'cover', 
+              height:'100%',
+              opacity: `${hover? 100 : initialOpacity}%`,
+              transition: "opacity 0.2s ease-in-out",
+            }}
+
+          />
+          <Box sx={{position: 'absolute', display: 'flex', flexDirection: 'column', justifyContent:'space-between', top:0, left:0, m:0, p:0, width:1, height:1}}>
+            <Typography 
+              variant="subtitle2" 
+              color="Grey"
+              align="right"
+              sx={{p:2, opacity: '60%'}}
+            >
+              {post.createdAt.toDateString()}
+            </Typography>
+            <Collapse in={!contentVisible} timeout={300}>
+              <Box 
+                sx={{
+                  backgroundColor: `rgba(0,0,0, ${hover? .2 : 0})`,
+                  borderRadius: 1,
+                  transition: "background-color 0.2s ease-in-out",
+                  px: 2,
+                  pb: 3,
+                  pt: 1
+                }} 
+              >
+                <Typography 
+                  variant='h5' 
+                  color="white"
+                  align="left"
+                >
+                  {post.title}
+                </Typography>
+              </Box>
+            </Collapse>
+          </Box>
+        </Box>
+
+        <Collapse in={contentVisible} timeout={600}>
+          <Container sx={{py: 4}}>
+            <Typography variant="h4">
+              {post.title}
+            </Typography>
+            <Divider sx={{my: 1}}/>
+            <Typography variant='h6' sx={{whiteSpace: 'pre-wrap'}}>
+              <div dangerouslySetInnerHTML={{__html: parseText(post.body)}}></div>
+            </Typography>
+          </Container>
+        </Collapse>
+
+      </Card>
+    </Grow>
   )
 }
 
@@ -75,7 +104,6 @@ const parseText = function(text) {
     i = output.index + output[0].length
     mappedText += `<a href=${output.groups.link}>${output.groups.name}</a>`
   }
-  console.log(`${i} : ${text.length}`)
   mappedText += text.slice(i)
 
   return mappedText;

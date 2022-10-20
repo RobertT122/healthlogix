@@ -8,7 +8,7 @@ export const defaultTheme = responsiveFontSizes(createTheme({
       main: '#ffffff',
     },
     secondary: {
-      main: '#00921c',
+      main: '#608c61',
     },
   }
 }));

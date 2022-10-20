@@ -44,7 +44,7 @@ export default function Navbar () {
 
       <Drawer anchor='right' open={isOpen} variant="temporary" onClose={toggleDrawer}>
 
-        <Button variant="contained" sx={{width: 1, px: 2, mx: 0}}>
+        <Button variant="contained" sx={{width: 1, px: 2, mx: 0, my: 1}}>
           <Link href="/" >
             <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
               <HomeIcon sx={{my: 'auto', mr: 2}}/>
@@ -55,7 +55,7 @@ export default function Navbar () {
           </Link>
         </Button>
           
-        <Button variant="contained" sx={{width: 1, px: 2, mx: 0}}>
+        <Button variant="contained" sx={{width: 1, px: 2, mx: 0, my: 1}}>
           <Link href="/news">
             <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
               <FeedIcon sx={{my: 'auto', mr:2}}/>
@@ -66,7 +66,7 @@ export default function Navbar () {
           </Link>
         </Button>
 
-        <Button variant="contained" sx={{width: 1, px: 2, mx: 0}}>
+        <Button  variant="contained" sx={{width: 1, px: 2, mx: 0, my: 1}}>
           <Link href="/carreers">
             <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
               <WorkIcon sx={{my: 'auto', mr:2}}/>
