@@ -1,6 +1,7 @@
 import React from "react"
 import { Card, CardMedia, Box, Typography, Divider, Container, Collapse, Grow} from "@mui/material"
 import { useState } from "react"
+import {parseUrlFromText} from '../lib/helper'
 
 const initialOpacity = 80;
 
@@ -82,7 +83,7 @@ export default function NewsFeedItem({post, index=0, active ,toggleActive }) {
             </Typography>
             <Divider sx={{my: 1}}/>
             <Typography variant='h6' sx={{whiteSpace: 'pre-wrap'}}>
-              <div dangerouslySetInnerHTML={{__html: parseText(post.body)}}></div>
+              <div dangerouslySetInnerHTML={{__html: parseUrlFromText(post.body)}}></div>
             </Typography>
           </Container>
         </Collapse>
@@ -92,18 +93,4 @@ export default function NewsFeedItem({post, index=0, active ,toggleActive }) {
   )
 }
 
-const parseText = function(text) {
-  let reg = /\[(?<name>[^\]]*)\]\((?<link>[^\)]*)\)/g;
-  let output;
-  let i = 0;
 
-  let mappedText = ''
-  while((output = reg.exec(text)) !== null){
-    mappedText += text.slice(i, output.index)
-    i = output.index + output[0].length
-    mappedText += `<a href=${output.groups.link}>${output.groups.name}</a>`
-  }
-  mappedText += text.slice(i)
-
-  return mappedText;
-}

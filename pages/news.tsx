@@ -53,10 +53,13 @@ const NewsPostForm = function ({setRefresh}) {
       updatePost('body', e.currentTarget.value)
     }
   }
+
   const todaysDate = useMemo(()=> {return new Date()}, [])
+  
   const tempPostUrl = useMemo(()=>{
     return image ? URL.createObjectURL(image) : "images/default-post-image.jpg" 
   }, [image])
+
   const tempPost = useMemo(() => {return Object.assign({}, post, {createdAt: todaysDate},{imageURL: tempPostUrl})}, [tempPostUrl, post])
 
   function ClearImage() {
