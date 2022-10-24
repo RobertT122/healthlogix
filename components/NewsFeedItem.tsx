@@ -38,7 +38,7 @@ export default function NewsFeedItem({post, index=0, active ,toggleActive }) {
               objectFit:'cover', 
               height:'100%',
               opacity: `${hover || active? 100 : initialOpacity}%`,
-              aspectRatio: `${active? '4/3' : '3'}`,
+              aspectRatio: `${active? '2' : '3'}`,
               transition: 'aspect-ratio 1s, opacity 0.2s ease-in-out'
             }}
 

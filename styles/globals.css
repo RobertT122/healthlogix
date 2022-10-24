@@ -5,6 +5,10 @@ body {
   background-color: rgb(198, 219, 197);
 }
 
+a {
+  color: inherit
+}
+
 .icon{
   height: 60px;
 }

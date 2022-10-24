@@ -16,9 +16,9 @@ export default function NewsPage() {
     <Container sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: 1}}>
       <NewsPostForm setRefresh={setRefresh}/>
       <Card variant="outlined" sx={{width: 1, px: 5, pb: 10, pt: 3, mb: 4}}>
-        <Typography variant="h2" align="center">News Feed</Typography>
+        <Typography variant="h4" align="center">News Feed</Typography>
         <Divider sx={{width: 1}}/>
-        <NewsFeed count={10} refresh={refresh}/>
+        <NewsFeed count={10} refresh={refresh} update={true}/>
       </Card>
     </Container>
 

@@ -37,7 +37,9 @@ Qui laboriosam enim eos fuga harum et blanditiis nulla qui perferendis iure dese
       </Card>
       <Card sx={{mt: 4}}>
         <Box>
-          <NewsFeed count={5} refresh={{}}/>
+          <Typography align="center" variant="h4" sx={{p: 2}}>News Feed</Typography>
+          <Divider sx={{mx: 3}}/>
+          <NewsFeed update={false} count={3} refresh={{}}/>
         </Box>
       </Card>
     </Container>

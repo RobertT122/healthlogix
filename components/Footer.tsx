@@ -1,6 +1,7 @@
 import { Container, IconButton, Tooltip, Modal, Box, Typography, Divider } from "@mui/material"
-import { Facebook, Email, LocalPhone } from '@mui/icons-material';
+import { Facebook, Email, LocalPhone, Place } from '@mui/icons-material';
 import { useState } from "react";
+import {contact} from '../lib/basicInfo'
 
 
 const style = {
@@ -22,7 +23,7 @@ const style = {
 export default function Footer () {
   let [modalType, setModalType] = useState('closed');
   
-  function PhoneNumberModal() {
+  function FooterModal() {
     return(
       <Modal
         closeAfterTransition
@@ -30,21 +31,39 @@ export default function Footer () {
         onClose={()=>setModalType('closed')}
       >
         <Box  sx={style}>
-          { modalType === 'phoneNumber' ?
-              <a href="tel:6313070256" className="footer-modal">
-                <Typography variant='h4' align="center" >
-                  6313070256
-                </Typography>
-              </a>
-            : modalType === 'email'?
-                <a href="mailto:robert@tetrault.org" className="footer-modal">
-                  <Typography variant='h4' align="center" >
-                    robert@tetrault
-                  </Typography>
-                </a>
-              :
-              'error'
-          }
+          {(() => {
+            switch(modalType){
+
+              case "phoneNumber":
+                return(
+                  <a href={contact.phone.link} className="footer-modal">
+                    <Typography variant='h4' align="center" >
+                      {contact.phone.title}
+                    </Typography>
+                  </a>
+                )
+              case "email" :
+                return(
+                  <a href={contact.email.link} className="footer-modal">
+                    <Typography variant='h4' align="center" >
+                      {contact.email.title}
+                    </Typography>
+                  </a>
+                )
+              
+              case "location" :
+                return(
+                  <a href={contact.location.link} className="footer-modal">
+                    <Typography variant='h4' align="center" >
+                      {contact.location.title}
+                    </Typography>
+                  </a>
+                )
+              default :
+              return <Typography>error</Typography>
+
+            }
+          })()}
         </Box>
       </Modal>
     )
@@ -55,7 +74,7 @@ export default function Footer () {
     <Divider sx={{mt: 10}}/>
       <Container sx={{display: 'flex', justifyContent: 'space-evenly', mb: 2}}>
         <Tooltip title="Facebook">
-          <a href="https://www.facebook.com/tacobell/">
+          <a href={contact.facebook.link}>
             <IconButton size="large" >
               <Facebook fontSize="large"/>
             </IconButton>
@@ -73,8 +92,15 @@ export default function Footer () {
             <LocalPhone fontSize="large"/>
           </IconButton>
         </Tooltip>
+
+        <Tooltip title="Location">
+          <IconButton size="large" onClick={()=>setModalType('location')} >
+            <Place fontSize="large"/>
+          </IconButton>
+        </Tooltip>
+
       </Container>
-      <PhoneNumberModal />
+      <FooterModal />
     </>
   )
 }

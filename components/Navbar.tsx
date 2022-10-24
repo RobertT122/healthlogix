@@ -7,6 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import FeedIcon from '@mui/icons-material/Feed';
 import WorkIcon from '@mui/icons-material/Work';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 
 export default function Navbar () {
@@ -113,4 +114,9 @@ const buttons = [
     link: '/careers',
     Icon: <WorkIcon sx={buttonSx}/>
   },
+  {
+    name: 'Contact',
+    link: '/contact',
+    Icon: <QuestionAnswerIcon sx={buttonSx}/>
+  }
 ]
