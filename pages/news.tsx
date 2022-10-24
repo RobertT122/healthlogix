@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import NewsFeed from "../components/NewsFeed"
 import NewsFeedItem from "../components/NewsFeedItem";
 import { uploadPost } from "../lib/firebase"
-import { TextField, Button, TextareaAutosize, Typography, Container, Box, Divider, IconButton} from "@mui/material";
+import { TextField, Button, TextareaAutosize, Typography, Container, Box, Divider, IconButton, Card} from "@mui/material";
 
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -11,18 +11,24 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 export default function NewsPage() {
   const [refresh, setRefresh] = useState({})
-
+  
   return (
-    <>
+    <Container sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: 1}}>
       <NewsPostForm setRefresh={setRefresh}/>
-      <Divider/>
-      <NewsFeed count={10} refresh={refresh}/>
-    </>
-  )
+      <Card variant="outlined" sx={{width: 1, px: 5, pb: 10, pt: 3, mb: 4}}>
+        <Typography variant="h2" align="center">News Feed</Typography>
+        <Divider sx={{width: 1}}/>
+        <NewsFeed count={10} refresh={refresh}/>
+      </Card>
+    </Container>
+
+)
 }
 
 const NewsPostForm = function ({setRefresh}) {
-
+  const [previewActive, setPreviewActive] = useState(false)
+  const togglePreview = () => setPreviewActive(!previewActive)
+  
   const [post, setPost] = useState({body: '', title: ''});
   const updatePost = (key, newValue) => {
     setPost(Object.assign({}, post, {[key]: newValue}))
@@ -65,10 +71,11 @@ const NewsPostForm = function ({setRefresh}) {
   }
 
   return (
-    <Container sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: 1}}>
-      <Typography variant='h4'>Create a New Post</Typography>
+
+    <Card variant="outlined" sx={{px: 10, pb: 10, pt: 3, mb: 4}}>
+      <Typography variant='h4' align="center">Create a New Post</Typography>
       <br />
-      <NewsFeedItem post={tempPost} index={0} />
+      <NewsFeedItem post={tempPost} index={0} active={previewActive} toggleActive={togglePreview}/>
       <br/><br/>
       <form onSubmit={(e) => handleSubmit(e)} className='posts-form'>
         <TextField color="secondary" label='Title' onChange={(e) => updatePost('title', e.currentTarget.value)}/>
@@ -77,7 +84,7 @@ const NewsPostForm = function ({setRefresh}) {
           style={{width: "100%", minHeight: 200}}
           onChange={(e) => updatePost('body', e.currentTarget.value)}
           onKeyDown={(e) => handleTextAreaTabs(e)}
-        />
+          />
         <Box sx={{mx: 'auto'}}>
           <Typography variant="subtitle1" color="gray">* Add a Link: [name of link](https://www.example.com)</Typography>
         </Box>
@@ -98,12 +105,12 @@ const NewsPostForm = function ({setRefresh}) {
             type="submit" 
             sx={{my: 'auto', mx: 2}}
             hidden={disabled} 
-          >
+            >
             Submit
           </Button>
         </Box>
       </form>
-    </Container>
+    </Card>
   )
 }
 

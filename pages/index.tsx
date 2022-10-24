@@ -14,20 +14,6 @@ export default function HomePage() {
       flexDirection: "column",
       padding: 0
     }}>
-      <Box sx={{width: 1}}>
-        {/* <Card variant='outlined' sx={{p: 1, position: 'absolute', m: 2 }} className="coverCard">
-          <Typography variant="h3" className="coverText">
-            Hello World
-          </Typography>
-          <Divider sx={{px: 2}}/>
-          <Box sx={{p: "10px"}}>
-            <Typography variant="subtitle2" className="coverText">
-            In publishing and graphic design, Lorem ipsum is a placeholder text commonly
-            </Typography>
-          </Box>
-        </Card> */}
-        {/* <img src="images/holisticmedicine.jpg" className="coverImage"/> */}
-      </Box>
       <Card variant='outlined' sx={{m: "auto"}}>
         <CardMedia 
           component="img"
@@ -39,18 +25,21 @@ export default function HomePage() {
           </Typography>
           <Divider />
           <Box sx={{p: "10px"}}>
-            <Typography variant="h6" >
-            In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. It is also used to temporarily replace text in a process called greeking, which allows designers to consider the form of a webpage or publication, without the meaning of the text influencing the design. Lorem ipsum is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin. Versions of the Lorem ipsum text have been used in typesetting at least since the 1960s, when it was popularized by advertisements for Letraset transfer sheets.[1] Lorem ipsum was introduced to the digital world in the mid-1980s, when Aldus employed it in graphic and word-processing templates for its desktop publishing program PageMaker. Other popular word processors, including Pages and Microsoft Word, have since adopted Lorem ipsum,[2] as have many LaTeX packages,[3][4][5] web content managers such as Joomla! and WordPress, and CSS libraries such as Semantic UI
+            <Typography variant="h6" sx={{whiteSpace: 'pre-wrap'}}>
+{`Lorem ipsum dolor sit amet. Ut odio vero vel recusandae architecto et doloribus molestiae nam itaque adipisci est fugiat placeat. Non quia cumque qui laborum quod ut fugiat tempore.
+
+Qui autem nihil et rerum harum ea galisum harum in autem praesentium et tempora ipsa. Id optio voluptatibus est corporis repellat aut commodi ipsa eos tempora fuga. Qui laborum earum aut dolorem dolores ab omnis rerum aut perspiciatis tenetur! Sit galisum galisum id ipsa quas ut laudantium magni aut iste quaerat id officia non itaque natus.
+
+Qui laboriosam enim eos fuga harum et blanditiis nulla qui perferendis iure deserunt cupiditate cum repellendus quae. Aut Quis optio ab numquam sapiente aut voluptate exercitationem in excepturi voluptates ut neque quibusdam et dolor repellendus ut optio dolorum.`}
             </Typography>
           </Box>
         </Box>
+      </Card>
+      <Card sx={{mt: 4}}>
         <Box>
-        <NewsFeed count={5} refresh={{}}/>
+          <NewsFeed count={5} refresh={{}}/>
         </Box>
       </Card>
-
-
-      
     </Container>
   )
 }

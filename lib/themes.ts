@@ -1,4 +1,5 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import "@fontsource/roboto/400.css"
 
 
 export const defaultTheme = responsiveFontSizes(createTheme({
@@ -9,6 +10,6 @@ export const defaultTheme = responsiveFontSizes(createTheme({
     },
     secondary: {
       main: '#608c61',
-    },
+    }
   }
 }));

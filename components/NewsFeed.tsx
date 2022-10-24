@@ -11,6 +11,11 @@ import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 // or blog information with optional picture
 export default function NewsFeed ({ count, refresh }) {
   let [posts, setPosts] = useState([]);
+  let [active, setActive] = useState(-1);
+
+  function toggleActive(index) {
+    setActive(active === index ? -1 : index)
+  }
 
   const getTopPosts = useMemo(() => {
     let now = new Date();
@@ -35,7 +40,7 @@ export default function NewsFeed ({ count, refresh }) {
         {posts.map((post, index) => {
           return(
             <ListItem sx={{width: "100%", display:'flex', flexDirection: 'column'}} key={index} > 
-              <NewsFeedItem post={post} index={index%count}/> 
+              <NewsFeedItem post={post} index={index%count} active={active===index} toggleActive={()=>toggleActive(index)}/> 
             </ListItem>
           )
         })}

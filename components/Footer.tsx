@@ -1,4 +1,3 @@
-// Contains links to social media and site navigation
 import { Container, IconButton, Tooltip, Modal, Box, Typography, Divider } from "@mui/material"
 import { Facebook, Email, LocalPhone } from '@mui/icons-material';
 import { useState } from "react";

@@ -4,9 +4,10 @@ import { useState } from "react"
 
 const initialOpacity = 80;
 
-export default function NewsFeedItem({post, index=0}) {
+export default function NewsFeedItem({post, index=0, active ,toggleActive }) {
+  
   let [hover, setHover] = useState(false)
-  let [contentVisible, setContentVisible] = useState(false)
+  // let [contentVisible, setContentVisible] = useState(false)
   return(
     <Grow in={true} timeout={index*500 + 500}>
       <Card 
@@ -14,7 +15,6 @@ export default function NewsFeedItem({post, index=0}) {
         sx={{width: "100%", m:0, maxWidth: 900, minWidth: 400, backgroundColor: "rgb(247, 247, 247)"}} 
         className="news-feed-card"
         onMouseLeave={()=> {
-          setContentVisible(false)
           setHover(false)
         }}
       >
@@ -22,16 +22,14 @@ export default function NewsFeedItem({post, index=0}) {
           component="div"
           sx={{
             position: 'relative',
-            aspectRatio: '3',
             backgroundColor: 'black',
-
           }}
 
           onMouseEnter={() => {
             setHover(true)
           }}
 
-          onClick={() => setContentVisible(true)}
+          onClick={toggleActive}
         >
           <CardMedia
             component="img"
@@ -39,8 +37,9 @@ export default function NewsFeedItem({post, index=0}) {
             sx={{
               objectFit:'cover', 
               height:'100%',
-              opacity: `${hover? 100 : initialOpacity}%`,
-              transition: "opacity 0.2s ease-in-out",
+              opacity: `${hover || active? 100 : initialOpacity}%`,
+              aspectRatio: `${active? '4/3' : '3'}`,
+              transition: 'aspect-ratio 1s, opacity 0.2s ease-in-out'
             }}
 
           />
@@ -53,7 +52,7 @@ export default function NewsFeedItem({post, index=0}) {
             >
               {post.createdAt.toDateString()}
             </Typography>
-            <Collapse in={!contentVisible} timeout={300}>
+            <Collapse in={!active} timeout={300}>
               <Box 
                 sx={{
                   backgroundColor: `rgba(0,0,0, ${hover? .2 : 0})`,
@@ -76,7 +75,7 @@ export default function NewsFeedItem({post, index=0}) {
           </Box>
         </Box>
 
-        <Collapse in={contentVisible} timeout={600}>
+        <Collapse in={active} timeout={600}>
           <Container sx={{py: 4}}>
             <Typography variant="h4">
               {post.title}

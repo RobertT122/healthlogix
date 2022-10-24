@@ -1,6 +1,6 @@
 //Link to home button and drawer for site navigation
-import { AppBar, IconButton, Toolbar, Drawer, Button, Typography, Box } from '@mui/material'
-import { useState } from 'react';
+import { AppBar, IconButton, Toolbar, Drawer, Button, Typography, Box, useMediaQuery} from '@mui/material'
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -10,74 +10,107 @@ import WorkIcon from '@mui/icons-material/Work';
 
 
 export default function Navbar () {
-  let [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const toggleDrawer = () => setIsOpen(!isOpen)
+  const portrait = !useMediaQuery('(min-aspect-ratio: 1/1)');
 
   return (
     <>
-      <AppBar sx={{ flexDirection: 'row', py: 1, justifyContent: 'space-between'}}>
-        
-        <IconButton 
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mx: 2, my: 'auto'}}
-        >
-          <Link href="/">
-            <HomeIcon fontSize="large"/>
-          </Link>
-        </IconButton>
-        <img src='icons/healthlogixtext.png' className='icon'/>
-        <IconButton 
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mx: 2, my: 'auto'}}
-          onClick={toggleDrawer}
-        >
-          <MenuIcon fontSize="large"/>
-        </IconButton>
+      <AppBar sx={{ flexDirection: 'row', py: 1, px:2, justifyContent: 'space-between'}}>
+        {portrait ?
+          <IconButton 
+            size="large"
+            edge="start"
+            color="secondary"
+            aria-label="menu"
+            sx={{ my: 'auto', transition: '1s'}}
+          >
+            <Link href="/">
+              <HomeIcon fontSize="large"/>
+            </Link>
+          </IconButton>
+        :
+          <></>
+        }
+        <Box>
+          {
+            portrait ?
+              <img src='icons/healthlogixtext.png' className='icon'/>
+            :
+              <Button sx={{mx:0, p:0}}>
+                <Link href='/' >
+                  <img src='icons/healthlogixtext.png' className='icon'/>
+                </Link>
+              </Button>
+          }
+        </Box>
+        {portrait ?
+        <>
+          <IconButton 
+            size="large"
+            edge="start"
+            color="secondary"
+            aria-label="menu"
+            sx={{ my: 'auto'}}
+            onClick={toggleDrawer}
+          >
+            <MenuIcon fontSize="large"/>
+          </IconButton>
+          <Drawer anchor='right' open={isOpen} variant="temporary" onClose={toggleDrawer} >
+              <ButtonList home={true}/>
+          </Drawer>
+        </>
+        :
+        <Box sx={{display: 'flex'}}>
+          <ButtonList home={false}/>
+        </Box>
+        }
       </AppBar>
       <Toolbar sx={{mb: 3.5}}/>
 
-      <Drawer anchor='right' open={isOpen} variant="temporary" onClose={toggleDrawer}>
-
-        <Button variant="contained" sx={{width: 1, px: 2, mx: 0, my: 1}}>
-          <Link href="/" >
-            <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
-              <HomeIcon sx={{my: 'auto', mr: 2}}/>
-              <Typography variant="h6" >
-                Home
-              </Typography>
-            </Box>
-          </Link>
-        </Button>
-          
-        <Button variant="contained" sx={{width: 1, px: 2, mx: 0, my: 1}}>
-          <Link href="/news">
-            <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
-              <FeedIcon sx={{my: 'auto', mr:2}}/>
-              <Typography variant="h6" >
-                News
-              </Typography>
-            </Box>
-          </Link>
-        </Button>
-
-        <Button  variant="contained" sx={{width: 1, px: 2, mx: 0, my: 1}}>
-          <Link href="/carreers">
-            <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
-              <WorkIcon sx={{my: 'auto', mr:2}}/>
-              <Typography variant="h6" >
-                Career
-              </Typography>
-            </Box>
-          </Link>
-        </Button>
-
-      </Drawer>
     </>
   )
 }
+
+function ButtonList({home}) {
+  const offset = home ? 0 : 1
+  return(
+    <>
+    {
+      buttons.slice(offset).map(({name, link, Icon}) => {
+        return(
+          <Button variant="outlined" color="secondary" sx={{ px: 2, mx: 1, my: 1}} key={name}>
+            <Link href={link} >
+              <Box sx={{width: 1, display: 'flex', justifyContent: 'space-between'}}>
+                {Icon}
+                <Typography variant="body1" >
+                  {name}
+                </Typography>
+              </Box>
+            </Link>
+          </Button>
+        )
+      })
+    }
+    </>
+  )
+}
+
+const buttonSx = {my: 'auto', mr:2}
+const buttons = [
+  {
+    name: 'Home',
+    link: '/',
+    Icon: <HomeIcon sx={buttonSx} />
+  },
+  {
+    name: 'News',
+    link: '/news',
+    Icon: <FeedIcon sx={buttonSx} />
+  },
+  {
+    name: 'Careers',
+    link: '/careers',
+    Icon: <WorkIcon sx={buttonSx}/>
+  },
+]
