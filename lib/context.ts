@@ -1,4 +1,11 @@
 import { createContext } from "react";
 import { User } from "firebase/auth";
 
-export const UserContext = createContext<User | null>(null);
+interface UserContextInterface {
+  user?: User;
+  isAdmin: boolean;
+}
+
+export const UserContext = createContext<UserContextInterface>({
+  isAdmin: false,
+});

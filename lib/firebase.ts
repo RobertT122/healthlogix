@@ -3,15 +3,16 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { FirebaseApp, initializeApp } from "firebase/app";
 import {
   getFirestore,
+  doc,
   collection,
   addDoc,
   getDocs,
+  setDoc,
   query,
   orderBy,
   limit,
+  where,
   startAfter,
-  setDoc,
-  doc,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { properToCamel } from "./helper";
@@ -46,16 +47,19 @@ const formatDate = (post) =>
 
 export const getPosts = async function (count, lastVisibleDate = new Date()) {
   try {
-    let posts = await getDocs(
+    let lastPage = true;
+    let postsResults = await getDocs(
       query(
         postsRef,
         orderBy("createdAt", "desc"),
-        limit(count),
+        limit(count+1),
         startAfter(lastVisibleDate)
       )
     );
     console.log("got 'em");
-    return posts.docs.map((doc) => formatDate(doc.data()));
+    if(postsResults.docs[count]){lastPage = false};
+    let posts = postsResults.docs.slice(0, count).map((doc) => formatDate(doc.data()));
+    return {posts, lastPage}
   } catch (err) {
     console.log(err);
   }
@@ -103,6 +107,19 @@ export const getResumes = async function () {
   try {
     let resumes = await getDocs(resumesRef);
     return resumes.docs.map((doc) => doc.data());
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getIsAdmin = async function (uid) {
+  try {
+    let q = query(adminsRef, where("uid", "==", uid));
+    let admin = await getDocs(q);
+    if (admin) {
+      return admin.docs[0].data().isAdmin;
+    }
+    return false;
   } catch (err) {
     console.log(err);
   }

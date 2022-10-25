@@ -1,28 +1,20 @@
-import { auth, db } from "../lib/firebase";
+import { auth, db, getIsAdmin } from "../lib/firebase";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { collection } from "firebase/firestore";
 
-// export function useUserData() {
-//   const [user] = useAuthState(auth);
-//   const [type, setType] = useState<string | null>(null);
-//   const [name, setName] = useState<string | null>(null);
+export function useUserData() {
+  const [user] = useAuthState(auth);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-//   useEffect(() => {
-//     let unsubscribe;
+  useEffect(() => {
+    if (user) {
+      const adminRef = collection(db, "admin");
+      getIsAdmin(user.uid).then((result) => {
+        setIsAdmin(result);
+      });
+    }
+  }, [user]);
 
-//     if (user) {
-//       const ref = db.collection("users").doc(user.uid);
-//       unsubscribe = ref.onSnapshot((doc) => {
-//         setType(doc.data()?.type);
-//         setName(doc.data()?.name);
-//       });
-//     } else {
-//       setType(null);
-//       setName(null);
-//     }
-
-//     return unsubscribe;
-//   }, [user]);
-
-//   return { user, type, name };
-// }
+  return { user, isAdmin };
+}

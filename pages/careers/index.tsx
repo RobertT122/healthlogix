@@ -35,8 +35,6 @@ export default function CareersHomePage() {
         <Divider sx={{ my: 3 }} />
         <Grid container justifyContent="center" spacing={2}>
           {Object.keys(jobs).map((key) => {
-            if (key === "empty") return <></>;
-
             let job = jobs[key];
             return (
               <Grid item key={key} className="button-label">

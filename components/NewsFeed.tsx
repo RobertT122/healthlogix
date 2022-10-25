@@ -21,6 +21,7 @@ import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 export default function NewsFeed({ count, update, refresh }) {
   let [posts, setPosts] = useState([]);
   let [active, setActive] = useState(-1);
+  let [lastPage, setLastPage] = useState(true)
 
   function toggleActive(index) {
     setActive(active === index ? -1 : index);
@@ -37,12 +38,16 @@ export default function NewsFeed({ count, update, refresh }) {
 
   async function getInitialPosts() {
     let topPosts = await getTopPosts;
-    setPosts(topPosts);
+    console.log(topPosts)
+    setLastPage(topPosts.lastPage)
+    setPosts(topPosts.posts);
   }
 
   async function addNewPosts() {
     let newPosts = await getPosts(count, posts[posts.length - 1].createdAt);
-    setPosts(posts.concat(newPosts));
+    console.log(newPosts)
+    setLastPage(newPosts.lastPage)
+    setPosts(posts.concat(newPosts.posts));
   }
 
   return (
@@ -65,16 +70,20 @@ export default function NewsFeed({ count, update, refresh }) {
         })}
       </List>
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        {update ? (
-          <IconButton onClick={() => addNewPosts()}>
-            <ExpandCircleDownIcon />
-          </IconButton>
-        ) : (
+        {!update ? (
           <Link href="/news">
             <Typography>
               <Button color="secondary">See more news</Button>
             </Typography>
           </Link>
+        ) : (!lastPage ?
+          (
+          <IconButton onClick={() => addNewPosts()}>
+            <ExpandCircleDownIcon />
+          </IconButton>
+          ) : (
+            <></>
+          )
         )}
       </Box>
     </Container>
