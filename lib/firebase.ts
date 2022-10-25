@@ -14,7 +14,8 @@ import {
   where,
   startAfter,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { properToCamel } from "./helper";
 
 const firebaseConfig = {
@@ -35,6 +36,7 @@ if (!firebase.apps.length) {
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
 
 const storage = getStorage(app);
 const postsRef = collection(db, "posts");

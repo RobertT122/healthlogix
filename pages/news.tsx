@@ -1,5 +1,6 @@
 // multipage newsfeed component;
-import { useMemo, useState } from "react";
+import { useMemo, useState, useContext } from "react";
+import { UserContext } from "../lib/context";
 import NewsFeed from "../components/NewsFeed";
 import NewsFeedItem from "../components/NewsFeedItem";
 import { uploadPost } from "../lib/firebase";
@@ -20,7 +21,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 export default function NewsPage() {
   const [refresh, setRefresh] = useState({});
-
+  const user = useContext(UserContext)
   return (
     <Container
       sx={{
@@ -30,7 +31,7 @@ export default function NewsPage() {
         width: 1,
       }}
     >
-      <NewsPostForm setRefresh={setRefresh} />
+      {user.isAdmin? <NewsPostForm setRefresh={setRefresh} /> : <></>}
       <Card variant="outlined" sx={{ width: 1, px: 5, pb: 10, pt: 3, mb: 4 }}>
         <Typography variant="h4" align="center">
           News Feed

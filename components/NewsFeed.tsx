@@ -2,8 +2,8 @@
 // displays title, and content for news feed
 // content can include preview of a link
 import Link from "next/link";
-import { getPosts } from "../lib/firebase";
-import { useEffect, useMemo, useState } from "react";
+import { auth, getPosts } from "../lib/firebase";
+import { useEffect, useMemo, useState, useContext } from "react";
 import {
   Container,
   IconButton,
@@ -14,14 +14,16 @@ import {
   Button,
 } from "@mui/material";
 import NewsFeedItem from "./NewsFeedItem";
+import { UserContext } from "../lib/context";
 
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
+import { signOut } from "firebase/auth";
 
 // or blog information with optional picture
 export default function NewsFeed({ count, update, refresh }) {
   let [posts, setPosts] = useState([]);
   let [active, setActive] = useState(-1);
-  let [lastPage, setLastPage] = useState(true)
+  let [lastPage, setLastPage] = useState(true);
 
   function toggleActive(index) {
     setActive(active === index ? -1 : index);
@@ -38,15 +40,15 @@ export default function NewsFeed({ count, update, refresh }) {
 
   async function getInitialPosts() {
     let topPosts = await getTopPosts;
-    console.log(topPosts)
-    setLastPage(topPosts.lastPage)
+    console.log(topPosts);
+    setLastPage(topPosts.lastPage);
     setPosts(topPosts.posts);
   }
 
   async function addNewPosts() {
     let newPosts = await getPosts(count, posts[posts.length - 1].createdAt);
-    console.log(newPosts)
-    setLastPage(newPosts.lastPage)
+    console.log(newPosts);
+    setLastPage(newPosts.lastPage);
     setPosts(posts.concat(newPosts.posts));
   }
 
@@ -76,14 +78,12 @@ export default function NewsFeed({ count, update, refresh }) {
               <Button color="secondary">See more news</Button>
             </Typography>
           </Link>
-        ) : (!lastPage ?
-          (
+        ) : !lastPage ? (
           <IconButton onClick={() => addNewPosts()}>
             <ExpandCircleDownIcon />
           </IconButton>
-          ) : (
-            <></>
-          )
+        ) : (
+          <></>
         )}
       </Box>
     </Container>

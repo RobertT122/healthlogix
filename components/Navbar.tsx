@@ -1,4 +1,8 @@
 //Link to home button and drawer for site navigation
+import { UserContext } from "../lib/context";
+import { auth } from "../lib/firebase";
+
+import { useRouter } from "next/router";
 import {
   AppBar,
   IconButton,
@@ -9,7 +13,7 @@ import {
   Box,
   useMediaQuery,
 } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -23,6 +27,7 @@ export default function Navbar() {
   const toggleDrawer = () => setIsOpen(!isOpen);
   const portrait = !useMediaQuery("(min-aspect-ratio: 1/1)");
 
+
   return (
     <>
       <AppBar
@@ -32,14 +37,14 @@ export default function Navbar() {
           px: 2,
           justifyContent: "space-between",
         }}
-      >
+        >
         {portrait ? (
           <IconButton
-            size="large"
-            edge="start"
-            color="secondary"
-            aria-label="menu"
-            sx={{ my: "auto", transition: "1s" }}
+          size="large"
+          edge="start"
+          color="secondary"
+          aria-label="menu"
+          sx={{ my: "auto", transition: "1s" }}
           >
             <Link href="/">
               <HomeIcon fontSize="large" />
@@ -47,7 +52,7 @@ export default function Navbar() {
           </IconButton>
         ) : (
           <></>
-        )}
+          )}
         <Box>
           {portrait ? (
             <img src="icons/healthlogixtext.png" className="icon" />
@@ -68,7 +73,7 @@ export default function Navbar() {
               aria-label="menu"
               sx={{ my: "auto" }}
               onClick={toggleDrawer}
-            >
+              >
               <MenuIcon fontSize="large" />
             </IconButton>
             <Drawer
@@ -76,7 +81,7 @@ export default function Navbar() {
               open={isOpen}
               variant="temporary"
               onClose={toggleDrawer}
-            >
+              >
               <ButtonList home={true} />
             </Drawer>
           </>
@@ -93,15 +98,18 @@ export default function Navbar() {
 
 function ButtonList({ home }) {
   const offset = home ? 0 : 1;
+  let user = useContext(UserContext);
+  let router = useRouter();
+
   return (
     <>
       {buttons.slice(offset).map(({ name, link, Icon }) => {
         return (
           <Button
-            variant="outlined"
-            color="secondary"
-            sx={{ px: 2, mx: 1, my: 1 }}
-            key={name}
+          variant="outlined"
+          color="secondary"
+          sx={{ px: 2, mx: 1, my: 1 }}
+          key={name}
           >
             <Link href={link}>
               <Box
@@ -118,6 +126,24 @@ function ButtonList({ home }) {
           </Button>
         );
       })}
+        {user.user? (
+        <Button
+          onClick={(e) => {
+            console.log(user)
+            e.preventDefault();
+            auth.signOut();
+            router.push('/')
+          }}
+          color="error"
+          variant="outlined"
+          sx={{ px: 2, mx: 1, my: 1 }}
+        >
+          Logout
+        </Button>
+      ) : (
+        //Add login route here
+        <></>
+      )}
     </>
   );
 }

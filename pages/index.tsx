@@ -26,7 +26,7 @@ export default function HomePage() {
       <Card variant="outlined" sx={{ m: "auto" }}>
         <CardMedia component="img" image={mainContent.home.image} />
         <Box sx={{ padding: 2 }}>
-          <Typography variant="h3">{properToCamel("Hello world")}</Typography>
+          <Typography variant="h3">Hello world</Typography>
           <Divider />
           <Box sx={{ p: "10px" }}>
             <Typography variant="h6" sx={{ whiteSpace: "pre-wrap" }}>

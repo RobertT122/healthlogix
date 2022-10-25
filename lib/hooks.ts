@@ -8,6 +8,7 @@ export function useUserData() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    setIsAdmin(false);
     if (user) {
       const adminRef = collection(db, "admin");
       getIsAdmin(user.uid).then((result) => {
