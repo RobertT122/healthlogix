@@ -1,11 +1,10 @@
-import { Card, Container, Divider, TextareaAutosize, TextField, Typography, Button, Box } from "@mui/material";
+import { Card, Container, Divider, TextareaAutosize, TextField, Typography, Button, Box, List, ListItem } from "@mui/material";
 import { useRouter } from "next/router";
 import { jobs } from "../../lib/basicInfo";
 import { dashedToCamel, properToCamel } from "../../lib/helper";
-import { uploadApplication } from "../../lib/firebase";
+import { getApplications, uploadApplication } from "../../lib/firebase";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../lib/context";
-import { SettingsApplicationsOutlined } from "@mui/icons-material";
 
 const emptyJob = {
   title: "",
@@ -14,7 +13,7 @@ const emptyJob = {
 };
 
 export default function JobPage() {
-  
+  const user = useContext(UserContext)
   const router = useRouter();
   const { jobSlug } = router.query;
   let job = emptyJob;
@@ -40,11 +39,58 @@ export default function JobPage() {
       </Card>
       <br />
       <Card sx={{p: 3}}>
-        <ApplicationForm jid={properToCamel(job.title)}/>
+        { user.isAdmin ? (<ApplicationList jid={properToCamel(job.title)}/>) : (<ApplicationForm jid={properToCamel(job.title)}/>)}
+        
       </Card>
     </Container>
   );
 }
+
+function ApplicationList({jid}){
+  const [applications, setApplications] = useState([]);
+  useEffect(()=>{
+    getApplications(jid).then(apps => {
+      setApplications(apps)
+    })
+  }, [])
+
+  return (
+    <List>
+      {applications.map(application => {
+        return(
+          <ListItem>
+            <Box>
+              <Typography variant="h4">{application.name}</Typography>
+              <Box sx={{display: 'flex', my: 1}}>
+                <Typography color="secondary" sx={{mr: 2}}>Email:</Typography>
+                <Typography>{application.email}</Typography>
+              </Box>
+              <Box sx={{display: 'flex', my: 1}}>
+                <Typography color="secondary" sx={{mr: 2}}>Phone Number:</Typography>
+                <Typography>{application.phoneNumber}</Typography>
+              </Box>
+              <Box sx={{display: 'flex', my: 1}}>
+                <Typography color="secondary" sx={{mr: 2}}>LinkedIn url:</Typography>
+                <Typography>{application.linkedIn}</Typography>
+              </Box>
+              <Box sx={{display: 'flex', my: 1, flexDirection: 'column'}}>
+                <Typography color="secondary">Resume: </Typography>
+                <Typography>{application.resume}</Typography>
+              </Box>
+              <Box sx={{display: 'flex', my: 1, flexDirection: 'column'}}>
+                <Typography color="secondary">Cover Letter: </Typography>              
+                <Typography>{application.coverLetter}</Typography>              
+              </Box>
+            </Box>
+          </ListItem>
+        )
+      })}
+    </List>
+  )
+
+}
+
+
 
 function ApplicationForm({jid}){
   const [application, setApplication] = useState({name: '', phoneNumber: '', email:'', linkedIn: '', resume: '', coverLetter: '', jid});
