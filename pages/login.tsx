@@ -40,6 +40,7 @@ export default function LoginPage() {
             label="password"
             variant="outlined"
             color="secondary"
+            type="password"
             onChange={(e) =>
               setCredentials(
                 Object.assign({}, credentials, {

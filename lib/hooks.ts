@@ -19,3 +19,13 @@ export function useUserData() {
 
   return { user, isAdmin };
 }
+
+// export function useStateArray(init=[]) {
+//   const [array, setArray] = useState(init);
+//   function addToArray(value){
+//     setArray(array.concat([value]));
+//   }
+//   function removeFromArray(index){
+
+//   }
+// }

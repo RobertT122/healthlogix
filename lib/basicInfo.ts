@@ -66,11 +66,6 @@ export const jobs = {
     ],
   },
 
-  empty: {
-    title: "",
-    description: "",
-    requirements: [],
-  },
 };
 
 export const mainContent = {

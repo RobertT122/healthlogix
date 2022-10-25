@@ -86,33 +86,43 @@ export const uploadPost = async function (postInput) {
   }
 };
 
-export const getJobs = async function () {
-  try {
-    let jobs = await getDocs(jobsRef);
-    return jobs.docs.map((doc) => doc.data());
-  } catch (err) {
-    console.log(err);
-  }
-};
+// export const getJobs = async function () {
+//   try {
+//     let jobs = await getDocs(jobsRef);
+//     return jobs.docs.map((doc) => doc.data());
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
-export const uploadJob = async function (job) {
-  let slug = properToCamel(job.title);
-  try {
-    await setDoc(doc(db, "jobs", slug), job);
-    console.log("success!");
-  } catch (err) {
-    console.log(err);
-  }
-};
+// export const uploadJob = async function (job) {
+//   let slug = properToCamel(job.title);
+//   try {
+//     await setDoc(doc(db, "jobs", slug), job);
+//     console.log("success!");
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
-export const getResumes = async function () {
+export const getApplications = async function(jid) {
   try {
-    let resumes = await getDocs(resumesRef);
+    let q = query(resumesRef, where('jid', '==', jid))
+    let resumes = await getDocs(q);
     return resumes.docs.map((doc) => doc.data());
   } catch (err) {
     console.log(err);
   }
 };
+
+export const uploadApplication = async function (application) {
+  try {
+    await addDoc(resumesRef, application)
+    console.log("success!")
+  } catch(err) {
+    console.log(err)
+  }
+}
 
 export const getIsAdmin = async function (uid) {
   try {
