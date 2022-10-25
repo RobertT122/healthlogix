@@ -6,6 +6,10 @@ export function dashedToCamel (dashed) {
   return dashed.replace(/-([a-z])/g, m=> m[1].toUpperCase())
 }
 
+export function properToCamel (string) {
+  return string.toLowerCase().replace(/\s+./g, m=> m[1].toUpperCase())
+}
+
 export function parseUrlFromText (text) {
   let reg = /\[(?<name>[^\]]*)\]\((?<link>[^\)]*)\)/g;
   let output;

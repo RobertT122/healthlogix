@@ -73,3 +73,19 @@ export const jobs = {
     requirements: []
   }
 }
+
+
+export const mainContent = {
+  home: {
+    text: `Lorem ipsum dolor sit amet. Ut odio vero vel recusandae architecto et doloribus molestiae nam itaque adipisci est fugiat placeat. Non quia cumque qui laborum quod ut fugiat tempore.
+
+    Qui autem nihil et rerum harum ea galisum harum in autem praesentium et tempora ipsa. Id optio voluptatibus est corporis repellat aut commodi ipsa eos tempora fuga. Qui laborum earum aut dolorem dolores ab omnis rerum aut perspiciatis tenetur! Sit galisum galisum id ipsa quas ut laudantium magni aut iste quaerat id officia non itaque natus.
+    
+    Qui laboriosam enim eos fuga harum et blanditiis nulla qui perferendis iure deserunt cupiditate cum repellendus quae. Aut Quis optio ab numquam sapiente aut voluptate exercitationem in excepturi voluptates ut neque quibusdam et dolor repellendus ut optio dolorum.`,
+    image: "images/holisticmedicine.jpg",
+  },
+  career: {
+    text: `      Sagittis orci a scelerisque purus. Et sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque. Convallis convallis tellus id interdum velit laoreet. Ac odio tempor orci dapibus ultrices in iaculis nunc sed. Urna id volutpat lacus laoreet non. Ullamcorper sit amet risus nullam eget. Lacus sed viverra tellus in hac. Eu turpis egestas pretium aenean pharetra. Arcu non odio euismod lacinia at quis risus sed vulputate. Et netus et malesuada fames ac turpis egestas sed. Lacus luctus accumsan tortor posuere ac. Pellentesque habitant morbi tristique senectus. Id leo in vitae turpis massa. Enim ut tellus elementum sagittis vitae. Nec nam aliquam sem et tortor consequat id.`,
+    image: "images/pharmacy.jpg",
+  }
+}

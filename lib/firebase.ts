@@ -1,8 +1,9 @@
 import firebase from "firebase/compat/app";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { FirebaseApp, initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, startAfter} from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, startAfter, setDoc, doc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { properToCamel } from "./helper";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC41lttZDvC7pntMybDhTYdEqx_s3bnEOw",
@@ -25,8 +26,11 @@ export const db = getFirestore(app);
 
 const storage = getStorage(app);
 const postsRef = collection(db, 'posts');
+const jobsRef = collection(db, "jobs");
+const resumesRef = collection(db, "resumes");
+const adminsRef = collection(db, "admins")
 
-
+const formatDate = post => Object.assign(post, {createdAt: post.createdAt.toDate()})
 
 export const getPosts = async function(count, lastVisibleDate=new Date()){
   try{
@@ -37,8 +41,6 @@ export const getPosts = async function(count, lastVisibleDate=new Date()){
     console.log(err)
   }
 }
-
-const formatDate = post => Object.assign(post, {createdAt: post.createdAt.toDate()})
 
 export const uploadPost = async function(postInput){
   try{
@@ -56,6 +58,36 @@ export const uploadPost = async function(postInput){
     console.log("success! post uploaded")
   } catch(err) {
     console.log('Post upload failed' + err)
+  }
+}
+
+export const getJobs = async function(){
+  try{
+    let jobs = await getDocs(jobsRef);
+    return jobs.docs.map(doc => doc.data())
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+export const uploadJob = async function(job){
+  let slug = properToCamel(job.title)
+  try{
+    await setDoc(doc(db, "jobs", slug), job)
+    console.log("success!")
+  } catch( err ) {
+    console.log(err);
+  }
+}
+
+
+export const getResumes = async function(){
+  try{
+    let resumes = await getDocs(resumesRef);
+    return resumes.docs.map(doc => doc.data())
+  } catch(err) {
+    console.log(err)
   }
 }
 
