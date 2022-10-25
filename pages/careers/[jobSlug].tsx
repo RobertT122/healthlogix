@@ -33,7 +33,7 @@ export default function JobPage() {
         <Typography variant="h6">
           Requirements:
           <ul>
-            {job.requirements.map(req => <li>{req}</li>)}
+            {job.requirements.map((req, index) => <li key={index}>{req}</li>)}
           </ul>
         </Typography>
       </Card>
@@ -56,9 +56,9 @@ function ApplicationList({jid}){
 
   return (
     <List>
-      {applications.map(application => {
+      {applications.map((application, index) => {
         return(
-          <ListItem>
+          <ListItem key={index}>
             <Box>
               <Typography variant="h4">{application.name}</Typography>
               <Box sx={{display: 'flex', my: 1}}>

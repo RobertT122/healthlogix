@@ -21,6 +21,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import FeedIcon from "@mui/icons-material/Feed";
 import WorkIcon from "@mui/icons-material/Work";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import Image from "next/image";
+import healthlogixLogo from '../public/icons/healthlogixtext.png'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,11 +57,11 @@ export default function Navbar() {
           )}
         <Box>
           {portrait ? (
-            <img src="icons/healthlogixtext.png" className="icon" />
+            <Image src={healthlogixLogo} height={60} width={240}/>
           ) : (
             <Button sx={{ mx: 0, p: 0 }}>
               <Link href="/">
-                <img src="icons/healthlogixtext.png" className="icon" />
+                <Image src={healthlogixLogo} height={60} width={240} />
               </Link>
             </Button>
           )}
