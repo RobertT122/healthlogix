@@ -41,7 +41,7 @@ export default function HomePage() {
             News Feed
           </Typography>
           <Divider sx={{ mx: 3 }} />
-          <NewsFeed update={false} count={3} refresh={{}} />
+          <NewsFeed update={false} count={3} refresh={{}} defaultActive={0}/>
         </Box>
       </Card>
     </Container>

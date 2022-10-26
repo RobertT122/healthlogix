@@ -20,9 +20,9 @@ import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import { signOut } from "firebase/auth";
 
 // or blog information with optional picture
-export default function NewsFeed({ count, update, refresh }) {
+export default function NewsFeed({ count, update, refresh, defaultActive }) {
   let [posts, setPosts] = useState([]);
-  let [active, setActive] = useState(-1);
+  let [active, setActive] = useState(defaultActive);
   let [lastPage, setLastPage] = useState(true);
 
   function toggleActive(index) {
