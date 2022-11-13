@@ -19,13 +19,13 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { properToCamel } from "./helper";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC41lttZDvC7pntMybDhTYdEqx_s3bnEOw",
-  authDomain: "healthlogix-dev.firebaseapp.com",
-  projectId: "healthlogix-dev",
-  storageBucket: "healthlogix-dev.appspot.com",
-  messagingSenderId: "556595806419",
-  appId: "1:556595806419:web:5e160b2e65d807e0471426",
-  measurementId: "G-Z5QD00L4F8",
+  apiKey: "AIzaSyB6QmZBtRHZDR_0rk9KHYRjjLiE5cKJfzU",
+  authDomain: "health-logix-website.firebaseapp.com",
+  projectId: "health-logix-website",
+  storageBucket: "health-logix-website.appspot.com",
+  messagingSenderId: "208854210118",
+  appId: "1:208854210118:web:5d71ade19d142dd9f61c47",
+  measurementId: "G-7JX945JRTZ"
 };
 
 let app: FirebaseApp;
