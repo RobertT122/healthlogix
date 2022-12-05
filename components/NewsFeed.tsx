@@ -27,7 +27,7 @@ export default function NewsFeed({ count, update, refresh, defaultActive }) {
 
   function toggleActive(index) {
     setActive(active === index ? -1 : index);
-  }
+  }``
 
   const getTopPosts = useMemo(() => {
     let now = new Date();

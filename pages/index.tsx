@@ -12,7 +12,6 @@ import {
   CardMedia,
 } from "@mui/material";
 import { mainContent } from "../lib/basicInfo";
-import { properToCamel } from "../lib/helper";
 
 export default function HomePage() {
   return (
